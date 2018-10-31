@@ -7,7 +7,7 @@ def TelaCadastrarClientes():
         c=cpf.get()
         e=email.get()
         t=telefone.get()
-        cadastro = Funcoes(n, c, e, t, "", "", "", 0,0)
+        cadastro = Funcoes(0,0,n, c, e, t, "", "", "", 0,0)
         Label(clientes, text=cadastro.cadastraClientes()).place(x=100,y=300)
 
     clientes = Tk()
@@ -37,7 +37,7 @@ def TelaCadastroProdutos():
         u=unidade.get()
         cP = cPreco.get()
         vP = vPreco.get()
-        cadastro = Funcoes("","","","", c,d,u,float(cP),float(vP))
+        cadastro = Funcoes(0,0,"","","","", c,d,u,float(cP),float(vP))
         Label(produtos, text=cadastro.cadastraProdutos()).place(x=100, y=300)
     produtos = Tk()
     produtos.title("Cadastro de Produtos")
@@ -63,7 +63,7 @@ def TelaCadastroProdutos():
 def TelaListaClientes():
     listaCli = Tk()
     listaCli.title("Lista Clientes")
-    lista = Funcoes("","","","","","","",0,0)
+    lista = Funcoes(0,0,"","","","","","","",0,0)
     for i in range(len(lista.listaClientes())):
         val=lista.listaClientes()[i]
         for n in range(len(val)): #Column
@@ -74,7 +74,7 @@ def TelaListaClientes():
 def TelaListaProdutos():
     root = Tk()
     root.title("Lista Clientes")
-    lista = Funcoes("", "", "", "", "", "", "", 0, 0)
+    lista = Funcoes(0,0,"", "", "", "", "", "", "", 0, 0)
     for i in range(len(lista.listaProdutos())):
         val = lista.listaProdutos()[i]
         for n in range(len(val)):  # Column
@@ -82,13 +82,103 @@ def TelaListaProdutos():
             b.insert(0, val[n])
             b.grid(row=i, column=n)
     root.mainloop()
+
+def TelaEditarDeletarClientes():
+    def busca():
+        def editar():
+            ed = Funcoes(id.get(), 0, nome.get(), cpf.get(), email.get(), tel.get(),"", "", "", 0, 0)
+            Label(root, text=ed.EditarClietne()).place(x=75, y=350)
+        def deletar():
+            de = Funcoes(id.get(), 0, "","", "", "","", "", "", 0, 0)
+            Label(root, text=de.DeletarClientes()).place(x=75, y=350)
+        bus = Funcoes(id.get(),0,"","","","","","","",0,0)
+        bus.BuscaClientes()
+        val = bus.BuscaClientes()[0]
+        Label(root, text="Nome").place(x=50,y=100)
+        nome = Entry(root)
+        nome.insert(0,val[1])
+        nome.place(x=125, y=100)
+        Label(root, text="CPF").place(x=50, y=150)
+        cpf = Entry(root)
+        cpf.insert(0,val[2])
+        cpf.place(x=125,y=150)
+        Label(root, text="Email").place(x=50, y=200)
+        email = Entry(root)
+        email.insert(0, val[3])
+        email.place(x=125, y=200)
+        Label(root, text="Telefone").place(x=50, y=250)
+        tel = Entry(root)
+        tel.insert(0, val[4])
+        tel.place(x=125, y=250)
+        edt = Button(root,text="Editar", command=editar)
+        edt.place(x=100, y=300)
+        dlt = Button(root, text="Deletar", command=deletar)
+        dlt.place(x=50, y=300)
+
+    root = Tk()
+    root.title("Editar/Deletar Clientes")
+    root.geometry("400x500")
+    id = Entry(root)
+    Label(root, text="Informe a ID").place(x=50, y=50)
+    id.place(x=125, y=50)
+    busca = Button(root, command=busca, text="Buscar")
+    busca.place(x=275, y=50)
+    root.mainloop()
+
+def TelaEditarDeletarProdutos():
+    def busca():
+        def editar():
+            ed = Funcoes(0, id.get,"","","","",codigo.get(),des.get(),un.get(),float(cPreco.get()),float(vPreco.get()))
+            Label(root, text=ed.EditarProduto()).place(x=75, y=400)
+
+        def deletar():
+            de = Funcoes(0, id.get(), "", "", "", "", "", "", "", 0, 0)
+            Label(root, text=de.DeletarProduto()).place(x=75, y=400)
+
+        bus = Funcoes(0, id.get(), "", "", "", "", "", "", "", 0, 0)
+        val = bus.BuscaProduto()[0]
+        Label(root, text="Cód. Barras").place(x=50, y=100)
+        codigo = Entry(root)
+        codigo.insert(0, val[1])
+        codigo.place(x=125, y=100)
+        Label(root, text="Descrição").place(x=50, y=150)
+        des = Entry(root)
+        des.insert(0, val[2])
+        des.place(x=125, y=150)
+        Label(root, text="Unidade").place(x=50, y=200)
+        un = Entry(root)
+        un.insert(0, val[3])
+        un.place(x=125, y=200)
+        Label(root, text="Preço de Compra").place(x=50, y=250)
+        cPreco = Entry(root)
+        cPreco.insert(0, val[4])
+        cPreco.place(x=125, y=250)
+        Label(root, text="Preço de Venda").place(x=50, y=300)
+        vPreco = Entry(root)
+        vPreco.insert(0, val[5])
+        vPreco.place(x=125,y=300)
+        edt = Button(root, text="Editar", command=editar)
+        edt.place(x=100, y=350)
+        dlt = Button(root, text="Deletar", command=deletar)
+        dlt.place(x=50, y=350)
+    root = Tk()
+    root.title("Editar/Deletar Produtos")
+    root.geometry("400x500")
+    id = Entry(root)
+    Label(root, text="Informe a ID").place(x=50, y=50)
+    id.place(x=125, y=50)
+    busca = Button(root, command=busca, text="Buscar")
+    busca.place(x=275,y=50)
+    root.mainloop()
+
+
 def hibernar():
     system("shutdown -h")
 def fechar():
     exit(0)
 tk = Tk()
 tk.title("Escolha uma Função")
-tk.geometry("300x300")
+tk.geometry("300x400")
 cadClientes = Button(tk, text="Cadastrar Clientes", command=TelaCadastrarClientes)
 cadClientes.place(x=50, y=50)
 cadProdutos = Button(tk, text="Cadastrar Produtos", command=TelaCadastroProdutos)
@@ -97,6 +187,10 @@ listaClientes = Button(tk, text="Lista Clientes", command=TelaListaClientes)
 listaClientes.place(x=50,y=150)
 listaProdutos = Button(tk, text="Lista Produtos", command=TelaListaProdutos)
 listaProdutos.place(x=50,y=200)
+editarDeletarClientes = Button(tk, text="Editar/Deletar Clientes", command=TelaEditarDeletarClientes)
+editarDeletarClientes.place(x=50,y=250)
+editarDeletarProdutos = Button(tk, text="Editar/Deletar Produtos", command=TelaEditarDeletarProdutos)
+editarDeletarProdutos.place(x=50,y=300)
 hibernar = Button(tk, text="Não Clique Aqui", command=hibernar)
 hibernar.place(x=190,y=10)
 fechar = Button(tk, text="Fechar", command=fechar)
