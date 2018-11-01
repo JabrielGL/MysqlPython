@@ -1,4 +1,7 @@
 from tkinter import *
+
+import time
+
 from Funcoes import Funcoes
 from os import *
 def TelaCadastrarClientes():
@@ -37,26 +40,28 @@ def TelaCadastroProdutos():
         u=unidade.get()
         cP = cPreco.get()
         vP = vPreco.get()
+        ret=Label(produtos, text="")
         cadastro = Funcoes(0,0,"","","","", c,d,u,float(cP),float(vP))
-        Label(produtos, text=cadastro.cadastraProdutos()).place(x=100, y=300)
+        ret['text'] = cadastro.cadastraProdutos()
+        ret.place(x=100, y=350)
     produtos = Tk()
     produtos.title("Cadastro de Produtos")
     produtos.geometry("400x400")
     Label(produtos, text="Cód. de Barras").place(x=50, y=50)
     codigo = Entry(produtos)
-    codigo.place(x=150,y=50)
+    codigo.place(x=200,y=50)
     Label(produtos, text="Descrição").place(x=50, y=100)
     descricao = Entry(produtos)
-    descricao.place(x=150,y=100)
+    descricao.place(x=200,y=100)
     Label(produtos, text="Unidade").place(x=50, y=150)
     unidade = Entry(produtos)
-    unidade.place(x=150,y=150)
+    unidade.place(x=200,y=150)
     Label(produtos, text="Preço de Compra").place(x=50, y=200)
     cPreco = Entry(produtos)
-    cPreco.place(x=150,y=200)
+    cPreco.place(x=200,y=200)
     Label(produtos, text="Preço de Venda").place(x=50, y=250)
     vPreco = Entry(produtos)
-    vPreco.place(x=150,y=250)
+    vPreco.place(x=200,y=250)
     btn = Button(produtos, text="Cadastrar", command=chamaFuncao)
     btn.place(x=200,y=300)
 
